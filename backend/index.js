@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const connectDB = require("./configs/dbConn");
+const cors = require("cors");
 
 connectDB();
 
@@ -10,6 +11,14 @@ connectDB();
 app.use(express.urlencoded({extended: true}));
 // Parse json data to req.body
 app.use(express.json());
+
+const corsOptions = {
+    origin: (origin, cb) => {
+        cb(null, true);
+    },
+};
+
+app.use(cors());
 
 app.use("/api/pins", require("./routes/pins"));
 app.use("/api/users", require("./routes/users"));
